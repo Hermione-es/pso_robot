@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="robot_name" default="robot"/>
+
+	<group ns="$(arg robot_name)_1">
+		<node pkg="pso_robot" name="pso_swarm" type="pso_swarm.py" output="screen" args="$(arg robot_name)_1 ">
+        </node> 
+
+	</group>
+
+	<group ns="$(arg robot_name)_2">
+		<node pkg="pso_robot" name="pso_swarm" type="pso_swarm.py" output="screen" args="$(arg robot_name)_2 ">
+        </node> 
+
+	</group>
+
+	<group ns="$(arg robot_name)_3">
+		<node pkg="pso_robot" name="pso_swarm" type="pso_swarm.py" output="screen" args="$(arg robot_name)_3 ">
+        </node> 
+
+	</group>
+
+	<group ns="$(arg robot_name)_4">
+		<node pkg="pso_robot" name="pso_swarm" type="pso_swarm.py" output="screen" args="$(arg robot_name)_4 ">
+        </node> 
+
+	</group>
+
+	<group ns="$(arg robot_name)_5">
+		<node pkg="pso_robot" name="pso_swarm" type="pso_swarm.py" output="screen" args="$(arg robot_name)_5 ">
+        </node> 
+        
+	</group>
+
+</launch>

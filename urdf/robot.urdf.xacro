@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<robot name="turtle_pose">
+
+  <material name="red">
+    <color rgba="0.8 0 0 1"/>
+  </material>
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+
+  <link name="map">
+  </link>
+
+  <joint name="world_to_box" type="fixed">
+    <parent link="map"/>
+    <child link="imu_link"/>
+    <origin xyz="0.0 0.0 0"/>
+  </joint>
+
+  <link name="imu_link">
+    <visual>
+      <origin xyz="0.0 0.0 0.125" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <box size = "0.25 0.25 0.25"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <joint name="box_to_arrow" type="fixed">
+    <parent link="imu_link"/>
+    <child link="arrow"/>
+    <origin xyz="0.0 0.0 0"/>
+  </joint>
+
+  <link name = "arrow">
+    <visual>
+      <geometry>
+        <box size = "0.125 0.125 0.1"/>
+      </geometry>
+      <origin xyz="0.125 0 0.15" rpy="0 0 0.7854"/>
+      <material name="red"/>
+    </visual>
+
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.07" />
+      </geometry>
+      <origin xyz="0.05 0.15 0.05" rpy="1.5 0 0"/>
+      <material name="red"/>
+    </visual>
+
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.07" />
+      </geometry>
+      <origin xyz="0.05 -0.15 0.05" rpy="1.5 0 0"/>
+      <material name="red"/>
+    </visual>
+    
+  </link>
+</robot>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="paused" value="false"/>
+        <arg name="headless" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="debug" value="false"/>
+        <arg name="world_name" value="$(find swarm)/gazebo_worlds/custom_world_with_obstacles.world"/>
+        <arg name="gui" value="true"/>
+    </include>
+
+    <include file="$(find pso_robot)/launch/multi_robot.launch"/>
+
+ <!--   <group ns="$(arg box_name)_1">
+        <include file="$(find pso_robot)/launch/box_spawn.launch" pass_all_args="true">
+            <arg name="initial_pose_x" value="6.0"/>
+            <arg name="initial_pose_y" value="6.0"/>
+            <arg name="box_name" value="$(arg box_name)_1"/>
+
+        </include>  
+    </group> -->
+
+    <node pkg="pso_robot" name="get_Gbest" type="gbest_pub.py" output="screen">
+        </node>
+
+    <!-- Show in Rviz   -->
+    <node name="rviz" pkg="rviz" type="rviz"/>
+</launch>

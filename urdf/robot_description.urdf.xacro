@@ -1,0 +1,181 @@
+<?xml version="1.0" ?>
+ <robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+  <xacro:arg name="robot_name" default="robot"/>
+
+<!--  -->
+	<xacro:include filename="$(find swarm)/urdf/materials.xacro"/>
+	<xacro:include filename="$(find pso_robot)/urdf/robot_gazebo_plugins.gazebo"/>
+	<xacro:include filename="$(find swarm)/urdf/macros.xacro"/>
+  
+  <link name="$(arg robot_name)/link_chassis">
+    <!-- pose and inertia -->
+    <pose>0 0 0.1 0 0 0</pose>
+    <inertial>
+      <mass value="5"/>
+      <!-- z=0.1 -->
+      <origin rpy="0 0 0" xyz="0 0 0"/> 
+      <inertia ixx="0.0395416666667" ixy="0" ixz="0" iyy="0.106208333333" iyz="0" izz="0.106208333333"/>
+    </inertial>
+    <!-- body -->
+    <collision name="$(arg robot_name)/collision_chassis">
+      <geometry>
+        <box size="0.5 0.3 0.07"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.5 0.3 0.07"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+
+
+    <!-- caster front -->
+    <collision name="$(arg robot_name)/caster_front_collision">
+      <origin rpy=" 0 0 0" xyz="-0.2 0 -0.05"/>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>0</mu>
+            <mu2>0</mu2>
+            <slip1>1.0</slip1>
+            <slip2>1.0</slip2>
+          </ode>
+        </friction>
+      </surface>
+    </collision>
+    <visual name="$(arg robot_name)/caster_front_visual">
+      <origin rpy=" 0 0 0" xyz="-0.2 0 -0.05"/>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+    </visual>
+  </link>
+
+    
+  <link name="$(arg robot_name)/sensor_laser">
+    <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <mass value="1" />
+        <inertia ixx="0.0395416666667" ixy="0" ixz="0" iyy="0.106208333333" iyz="0" izz="0.106208333333"/>
+    </inertial>
+
+    <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <cylinder radius="0.05" length="0.15"/>
+        </geometry>
+        <material name="white" />
+    </visual>
+        
+    <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.05" length="0.15"/>
+        </geometry>
+    </collision> 
+  </link> 
+  
+  <joint name="$(arg robot_name)/joint_sensor_laser" type="fixed">
+    <origin xyz="0 0 0.13" rpy="0 0 0"/>
+    <parent link="$(arg robot_name)/link_chassis"/>
+    <child link="$(arg robot_name)/sensor_laser"/>
+  </joint> 
+
+<!--   <xacro:link_wheel name="$(arg robot_name)/link_right_wheel" /> 
+ -->
+	<link name="$(arg robot_name)/link_right_wheel">
+		    <inertial>
+		      <mass value="0.2"/>
+		      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+		      <inertia ixx="0.000526666666667" ixy="0" ixz="0" iyy="0.000526666666667" iyz="0" izz="0.001"/>
+		    </inertial>
+		    <collision name="$(arg robot_name)/link_right_wheel_collision">
+		      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+		      <geometry>
+		        <cylinder length="0.04" radius="0.1"/>
+		      </geometry>
+		    </collision>
+		    <visual name="$(arg robot_name)/link_right_wheel_visual">
+		      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+		      <geometry>
+		        <cylinder length="0.04" radius="0.1"/>
+		      </geometry>
+		    </visual>
+		  </link>
+
+
+  <joint name="$(arg robot_name)/joint_right_wheel" type="continuous">
+    <origin rpy="0 0 0" xyz="0.05 0.15 0"/>
+    <child link="$(arg robot_name)/link_right_wheel"/>
+    <parent link="$(arg robot_name)/link_chassis"/>
+    <axis rpy="0 0 0" xyz="0 1 0"/>
+    <limit effort="10000" velocity="1000"/>
+    <joint_properties damping="1.0" friction="1.0"/>
+  </joint> 
+  
+  
+<!--  <xacro:link_wheel name="$(arg robot_name)/link_left_wheel" /> 
+ -->	<link name="$(arg robot_name)/link_left_wheel">
+		    <inertial>
+		      <mass value="0.2"/>
+		      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+		      <inertia ixx="0.000526666666667" ixy="0" ixz="0" iyy="0.000526666666667" iyz="0" izz="0.001"/>
+		    </inertial>
+		    <collision name="$(arg robot_name)/link_left_wheel_collision">
+		      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+		      <geometry>
+		        <cylinder length="0.04" radius="0.1"/>
+		      </geometry>
+		    </collision>
+		    <visual name="$(arg robot_name)/link_left_wheel_visual">
+		      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+		      <geometry>
+		        <cylinder length="0.04" radius="0.1"/>
+		      </geometry>
+		    </visual>
+		  </link>
+    
+  
+  <joint name="$(arg robot_name)/joint_left_wheel" type="continuous">
+    <origin rpy="0 0 0" xyz="0.05 -0.15 0"/>
+    <child link="$(arg robot_name)/link_left_wheel"/>
+    <parent link="$(arg robot_name)/link_chassis"/>
+    <axis rpy="0 0 0" xyz="0 1 0"/>
+    <limit effort="10000" velocity="1000"/>
+    <joint_properties damping="1.0" friction="1.0"/>
+  </joint>
+
+
+  <transmission name="$(arg robot_name)/tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint_left_wheel">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+
+<transmission name="$(arg robot_name)/tran2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint_right_wheel">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+
+
+
+</robot>
+

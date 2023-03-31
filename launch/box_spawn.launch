@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="initial_pose_x" default="0.0"/>
+    <arg name="initial_pose_y" default="0.0"/>
+    <arg name="initial_pose_a" default="1.0"/>
+    <arg name="box_name" default="box"/>
+
+    <!--  ******************** Obstacle Model ********************  -->
+
+      
+    <group ns="$(arg box_name)">  <!-- namespace for spawning multiple models -->
+  
+    <!-- loads the robot_description and starts robot_state_publisher node -->
+        <param name="box_description" command="$(find xacro)/xacro  '$(find pso_robot)/urdf/box.urdf.xacro' box_name:=$(arg box_name) " />
+ 	
+    </group>
+
+    <!-- Spawn a robot into Gazebo -->
+    <node name="$(arg box_name)_spawn" pkg="gazebo_ros" type="spawn_model" args="-file $(find pso_robot)/urdf/box.urdf.xacro -x $(arg initial_pose_x) -y $(arg initial_pose_y) -z $(arg initial_pose_a) -unpause -urdf -model $(arg box_name)"/>
+
+    <!-- Publish robot state -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" respawn="false" output="screen"/>
+</launch>

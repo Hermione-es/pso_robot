@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<launch>
+    <!-- Set arguments -->
+    <arg name="init_pose"/>
+    <arg name="robot_name" default="robot"/>
+
+    <!-- Load robot description -->
+    <!-- <param name="robot_description" command="$(find xacro)/xacro $(find swarm)/urdf/robot_description.urdf.xacro robot_name:=$(arg robot_name)   " /> -->
+    <!-- <param name="robot_description" command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro robot_name:=$(arg robot_name)   " /> -->
+    <param name="robot_description" command="$(find xacro)/xacro $(find pso_robot)/urdf/robot_description.urdf.xacro robot_name:=$(arg robot_name)" />
+
+    <!-- Publish robot state -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/> 
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" respawn="false" output="screen"/>
+    
+    <!-- Spwan a robot into Gazebo -->
+    <node name="$(arg robot_name)_spawn" pkg="gazebo_ros" type="spawn_model"
+          args="$(arg init_pose) -urdf -param robot_description -model $(arg robot_name)"
+          respawn="false" output="screen"/>
+
+</launch> 
+
