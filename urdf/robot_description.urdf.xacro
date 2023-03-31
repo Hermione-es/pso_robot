@@ -3,9 +3,9 @@
   <xacro:arg name="robot_name" default="robot"/>
 
 <!--  -->
-	<xacro:include filename="$(find swarm)/urdf/materials.xacro"/>
+	<xacro:include filename="$(find pso_robot)/urdf/materials.xacro"/>
 	<xacro:include filename="$(find pso_robot)/urdf/robot_gazebo_plugins.gazebo"/>
-	<xacro:include filename="$(find swarm)/urdf/macros.xacro"/>
+	<xacro:include filename="$(find pso_robot)/urdf/macros.xacro"/>
   
   <link name="$(arg robot_name)/link_chassis">
     <!-- pose and inertia -->
