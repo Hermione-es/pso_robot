@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#! /usr/bin/env python2.7
 import 	rospy
 import 	sys
 from    nav_msgs.msg import Odometry
@@ -15,17 +15,19 @@ def euclidean_distance( goal_point_x,goal_point_y,robot_pose_x, robot_pose_y):
 
 def callback(msg1,msg2,msg3,msg4,msg5):
 	distance_buffer=[] 
+
+	#Calculate the Euclidean distance between each robot's pose and the goal point
 	distance_buffer.insert(0,euclidean_distance(goal.x,goal.y,msg1.pose.pose.position.x,msg1.pose.pose.position.y))
 	distance_buffer.insert(1,euclidean_distance(goal.x,goal.y,msg2.pose.pose.position.x,msg2.pose.pose.position.y))
 	distance_buffer.insert(2,euclidean_distance(goal.x,goal.y,msg3.pose.pose.position.x,msg3.pose.pose.position.y))
 	distance_buffer.insert(3,euclidean_distance(goal.x,goal.y,msg4.pose.pose.position.x,msg4.pose.pose.position.y))
 	distance_buffer.insert(4,euclidean_distance(goal.x,goal.y,msg5.pose.pose.position.x,msg5.pose.pose.position.y))
 	
-	Gbest=10000 #Gbest
+	# Find the minimum distance and the corresponding robot
+	Gbest=10000
 	robot=0
 	for i in range(0,5):
 		if distance_buffer[i]<Gbest:
-
 			Gbest=distance_buffer[i]
 			robot=i
 	
@@ -58,20 +60,21 @@ rate = rospy.Rate(10)
 rate.sleep()
 pub = rospy.Publisher("get_Gbest",Pose, queue_size=10)
 Gbest_pose=Pose()
+
 global goal
 goal=Point()
 goal.x,goal.y=get_goal()
-print(goal)
+
 sub_1=message_filters.Subscriber('/robot_1/odom',Odometry)
 sub_2=message_filters.Subscriber('/robot_2/odom',Odometry)
 sub_3=message_filters.Subscriber('/robot_3/odom',Odometry)
 sub_4=message_filters.Subscriber('/robot_4/odom',Odometry)
 sub_5=message_filters.Subscriber('/robot_5/odom',Odometry)
 
+#Synchronize messages received from multiple nodes
 ts = message_filters.ApproximateTimeSynchronizer([sub_5,sub_4,sub_3,sub_2,sub_1], 10, 0.1, allow_headerless=True)
 ts.registerCallback(callback)
 
 # while not rospy.is_shutdown() :
-
 rospy.spin()
 

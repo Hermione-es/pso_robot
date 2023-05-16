@@ -4,7 +4,7 @@
     <!-- BEGIN ROBOT 1 -->
     <group ns="$(arg robot_name)_1">
         <include file="$(find pso_robot)/launch/one_robot.launch" pass_all_args="true">
-            <arg name="init_pose" value="-x -11 -y -11 -z 0 -Y -3.14"/>
+            <arg name="init_pose" value="-x -11 -y -11 -z 0 -Y 3.14"/>
             <arg name="robot_name" value="$(arg robot_name)_1"/>
             <param name="tf_prefix" value="$(arg robot_name)_1_tf" />
         </include>  
@@ -13,7 +13,7 @@
     <!-- BEGIN ROBOT 2 -->
     <group ns="$(arg robot_name)_2">
         <include file="$(find pso_robot)/launch/one_robot.launch" pass_all_args="true">
-            <arg name="init_pose" value="-x 0 -y 11 -z 0 -Y -1.57"/>
+            <arg name="init_pose" value="-x 0 -y 11 -z 0 -Y 0"/>
             <arg name="robot_name" value="$(arg robot_name)_2"/>
             <param name="tf_prefix" value="$(arg robot_name)_2_tf" />
         </include>
@@ -22,25 +22,25 @@
     <!-- BEGIN ROBOT 3 -->
     <group ns="$(arg robot_name)_3">
         <include file="$(find pso_robot)/launch/one_robot.launch" pass_all_args="true">
-            <arg name="init_pose" value="-x 11 -y 11 -z 0 -Y -1.57"/>
+            <arg name="init_pose" value="-x 11 -y 11 -z 0 -Y 3.14"/>
             <arg name="robot_name" value="$(arg robot_name)_3"/>
             <param name="tf_prefix" value="$(arg robot_name)_3_tf" />
         </include>
     </group>
 
     <!-- BEGIN ROBOT 4 -->
-    <group ns="$(arg robot_name)_4"> 
+    <group ns="$(arg robot_name)_4">
         <include file="$(find pso_robot)/launch/one_robot.launch" pass_all_args="true">
-            <arg name="init_pose" value="-x -11 -y 11 -z 0 -Y 0"/>
+            <arg name="init_pose" value="-x 0 -y -11 -z 0 -Y 1.57"/>
             <arg name="robot_name" value="$(arg robot_name)_4"/>
             <param name="tf_prefix" value="$(arg robot_name)_4_tf" />
         </include>
     </group>
 
     <!-- BEGIN ROBOT 5 -->
-    <group ns="$(arg robot_name)_5"> 
+    <group ns="$(arg robot_name)_5">
         <include file="$(find pso_robot)/launch/one_robot.launch" pass_all_args="true">
-            <arg name="init_pose" value="-x 11 -y -11 -z 0 -Y 1.57"/>
+            <arg name="init_pose" value="-x 11 -y -11 -z 0 -Y 3.14"/>
             <arg name="robot_name" value="$(arg robot_name)_5"/>
             <param name="tf_prefix" value="$(arg robot_name)_5_tf" />
         </include>
